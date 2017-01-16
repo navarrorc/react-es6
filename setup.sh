@@ -130,6 +130,13 @@ class App extends Component {
 ReactDOM.render(<App />,document.getElementById('root'));
 DELIM
 
+mkdir app/data
+cat > app/data/values.json <<DELIM
+{
+  "message": "Hello World!"
+}
+DELIM
+
 mkdir app/stylesheets
 cat > app/stylesheets/hello.scss <<DELIM
 @import url('https://fonts.googleapis.com/css?family=Exo');
