@@ -19,7 +19,8 @@ cat > package.json <<DELIM
 DELIM
 
 npm install --save react react-dom
-npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env json-loader
+npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env
+npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass
 
 # Configure Babel
 echo '{ "presets": ["react","es2015"] }' > .babelrc
@@ -49,6 +50,14 @@ module.exports = {
           test: /\.json$/,
           exclude: /(node_modules)/,
           loader: 'json-loader'
+        },
+        {
+          test: /\.css$/,
+          loader: 'style-loader!css-loader!autoprefixer-loader'
+        },
+        {
+          test: /\.scss$/,
+          loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
         }
     ]
   },
