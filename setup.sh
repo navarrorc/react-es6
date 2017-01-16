@@ -19,7 +19,7 @@ cat > package.json <<DELIM
 DELIM
 
 npm install --save react react-dom
-npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env
+npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env json-loader
 
 # Configure Babel
 echo '{ "presets": ["react","es2015"] }' > .babelrc
