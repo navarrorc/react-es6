@@ -113,12 +113,15 @@ mkdir app
 cat > app/main.jsx <<DELIM
 import React ,{Component} from 'react';
 import ReactDOM from 'react-dom';
+
+import text from './data/values.json';
+import './stylesheets/hello.scss';
  
 class App extends Component {
     render(){
         return(
             <div>
-                <h1>Hello World!</h1>
+                <h1 className='hello'>{text.message}</h1>
             </div>
         );
     }
@@ -127,4 +130,12 @@ class App extends Component {
 ReactDOM.render(<App />,document.getElementById('root'));
 DELIM
 
+mkdir app/stylesheets
+cat > app/stylesheets/hello.scss <<DELIM
+@import url('https://fonts.googleapis.com/css?family=Exo');
+
+.hello {
+    font-family: 'Exo', monospace;
+}
+DELIM
 
