@@ -8,7 +8,7 @@ cat > package.json <<DELIM
   "author": "Roberto C. Navarro",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --colors --inline --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -54,11 +54,11 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          loader: 'style-loader!css-loader!autoprefixer-loader'
+          loader: 'style-loader!css-loader?sourceMap!autoprefixer-loader'
         },
         {
           test: /\.scss$/,
-          loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+          loader: 'style-loader!css-loader?sourceMap!autoprefixer-loader!sass-loader?sourceMap'
         },
         {
           test: /\.(svg|ttf|woff|woff2|eot)(\?v=\d+\.\d+\.\d+)?$/,
