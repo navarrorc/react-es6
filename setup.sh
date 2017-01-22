@@ -19,8 +19,9 @@ cat > package.json <<DELIM
 DELIM
 
 npm install --save react react-dom
+npm install --save bootstrap@3 react-bootstrap
 npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env
-npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass
+npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass file-loader url-loader
 
 # Configure Babel
 echo '{ "presets": ["react","es2015"] }' > .babelrc
@@ -58,6 +59,10 @@ module.exports = {
         {
           test: /\.scss$/,
           loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+        },
+        {
+          test: /\.(svg|ttf|woff|woff2|eot)(\?v=\d+\.\d+\.\d+)?$/,
+          loader: "url-loader"
         }
     ]
   },
@@ -73,7 +78,7 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
-  // http://vue-loader.vuejs.org/en/workflow/production.html
+  //inspired by: http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
@@ -98,6 +103,7 @@ cat > index.html <<DELIM
 <html>
   <head>
       <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">      
       <title>Title</title>
   </head>
   <body>
@@ -111,18 +117,27 @@ DELIM
 
 mkdir app
 cat > app/main.jsx <<DELIM
+import 'bootstrap/dist/css/bootstrap.css';
+import {Grid, Row, Col, PageHeader, Button, Input} from 'react-bootstrap';
+
+import './stylesheets/hello.scss';
+
 import React ,{Component} from 'react';
 import ReactDOM from 'react-dom';
 
 import text from './data/values.json';
-import './stylesheets/hello.scss';
- 
+
 class App extends Component {
     render(){
         return(
-            <div>
-                <h1 className='hello'>{text.message}</h1>
-            </div>
+            <Grid>
+                <Row>
+                    <Col sm={12}>
+                        <PageHeader className="hello">{text.message}</PageHeader>
+                        <Button bsStyle="success">Success</Button>                        
+                    </Col>
+                </Row>              
+            </Grid>
         );
     }
 }
