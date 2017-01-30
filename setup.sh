@@ -8,7 +8,7 @@ cat > package.json <<DELIM
   "author": "Roberto C. Navarro",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --colors --inline --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --colors --inline --hot --progress",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -21,7 +21,7 @@ DELIM
 npm install --save react react-dom
 npm install --save bootstrap@3 react-bootstrap
 npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env
-npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass file-loader url-loader
+npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass file-loader url-loader img-loader
 
 # Configure Babel
 echo '{ "presets": ["react","es2015"] }' > .babelrc
@@ -40,7 +40,7 @@ module.exports = {
   module: {
     loaders: [
         {
-          test: /\.jsx$/,
+          test: /\.jsx?$/,
           exclude: /(node_modules)/,
           loader: 'babel-loader'
         },
@@ -60,6 +60,10 @@ module.exports = {
         {
           test: /\.(svg|ttf|woff|woff2|eot)(\?v=\d+\.\d+\.\d+)?$/,
           loader: "url-loader"
+        },
+        {
+          test: /\.png$/,
+          loader: "url-loader!img-loader"
         }
     ]
   },
