@@ -3,12 +3,12 @@
 cat > package.json <<DELIM
 {
   "name": "react-es6",
-  "description": "A React.js project",
+  "description": "A React project template using ES6",
   "version": "1.0.0",
   "author": "Roberto C. Navarro",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --colors --inline --hot --progress",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --open --colors --inline --hot --progress",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -19,12 +19,12 @@ cat > package.json <<DELIM
 DELIM
 
 npm install --save react react-dom
-npm install --save bootstrap@3 react-bootstrap
-npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react cross-env
+npm install --save bootstrap@3 react-bootstrap isomorphic-fetch es6-promise
+npm install --save-dev webpack@beta webpack-dev-server@beta babel-loader babel-preset-es2015 babel-core babel-preset-react babel-preset-stage-0 cross-env
 npm install --save-dev json-loader style-loader css-loader autoprefixer-loader sass-loader node-sass file-loader url-loader img-loader
 
 # Configure Babel
-echo '{ "presets": ["react","es2015"] }' > .babelrc
+echo '{ "presets": ["es2015", "stage-0", "react"] }' > .babelrc
 
 cat > webpack.config.js <<DELIM
 var path = require('path');
@@ -68,8 +68,10 @@ module.exports = {
     ]
   },
   devServer: {
+    host: process.env.IP || 'localhost',
+    port: parseInt(process.env.PORT) || 8080, // see: bit.ly/2kNJKli
     historyApiFallback: true,
-    noInfo: true
+    noInfo: false
   },
   performance: {
     hints: false
@@ -118,13 +120,15 @@ DELIM
 
 mkdir app
 cat > app/main.jsx <<DELIM
+import 'es6-promise/auto'
 import 'bootstrap/dist/css/bootstrap.css';
-import {Grid, Row, Col, PageHeader, Button, Input} from 'react-bootstrap';
-
 import './stylesheets/hello.scss';
 
-import React ,{Component} from 'react';
+import fetch from 'isomorphic-fetch'
+import React ,{ Component } from 'react';
 import ReactDOM from 'react-dom';
+
+import {Grid, Row, Col, PageHeader, Button, Input} from 'react-bootstrap';
 
 import text from './data/values.json';
 
